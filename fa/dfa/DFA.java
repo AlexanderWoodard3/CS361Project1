@@ -51,22 +51,22 @@ public class DFA implements DFAInterface, FAInterface {
 
     @Override
 	public Set<? extends State> getStates() {
-		return;
+		return Q;
 	}
 
 	@Override
 	public Set<? extends State> getFinalStates() {
-		return;
+		return F;
 	}
 
 	@Override
 	public State getStartState() {
-		return;
+		return q0;
 	}
 
 	@Override
 	public Set<Character> getABC() {
-		return;
+		return sigma;
 	}
 
     @Override
