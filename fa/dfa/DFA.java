@@ -86,7 +86,7 @@ public class DFA implements DFAInterface, FAInterface {
      */
     private String getQ() {
     	// TODO: Return States
-        return;
+        return "";
     }
 
     /*  
