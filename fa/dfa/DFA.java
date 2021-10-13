@@ -113,7 +113,7 @@ public class DFA implements DFAInterface, FAInterface {
      */
     private String getSigma() {
     	StringBuilder str = new StringBuilder();
-    	Iterator<Character> iter = Sigma.iterator();
+    	Iterator<Character> iter = sigma.iterator();
     	
     	str.append("Sigma = { ");
     	while (iter.hasNext()) {
