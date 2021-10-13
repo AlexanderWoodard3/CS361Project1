@@ -22,6 +22,9 @@ public class DFA implements DFAInterface, FAInterface {
 	private DFAState q0;							// Initial State
 	private LinkedHashSet<DFAState> F;				// Final States
 
+	/**
+	 * Create a new empty DFA.
+	 */
     public DFA() {
         Q = new LinkedHashSet<DFAState>();
         sigma = new LinkedHashSet<Character>();
@@ -32,6 +35,10 @@ public class DFA implements DFAInterface, FAInterface {
 
     @Override
     public void addStartState(String name) {
+    	DFAState newState = new DFAState(name);
+    	// Add state to Q if not already present
+    	Q.add(newState);
+    	// Add state to q0
     	q0 = new DFAState(name);
     }
 
@@ -44,11 +51,19 @@ public class DFA implements DFAInterface, FAInterface {
     @Override
     public void addFinalState(String name) {
     	DFAState newState = new DFAState(name);
+    	// Add state to Q if not already present
+    	Q.add(newState);
+    	// Add state to F
     	F.add(newState);
     }
 
     @Override
     public void addTransition(String fromState, char symbol, String toState) {
+    	// Add symbol to alphabet if not already present
+    	if(!sigma.contains(symbol)) {
+			sigma.add(symbol);
+		}
+    	
     	String keyString = fromState + symbol;
 		DFAState transState = null;
 
@@ -60,9 +75,7 @@ public class DFA implements DFAInterface, FAInterface {
 
 		delta.put(keyString, transState);
 
-		if(!sigma.contains(symbol)) {
-			sigma.add(symbol);
-		}
+		
     }
 
     @Override
@@ -179,27 +192,33 @@ public class DFA implements DFAInterface, FAInterface {
      * Get Transitions (as a String).
      */
     private String getDelta() {
-    	String transTable = "delta = \n";
-        transTable += "\t\t";
+    	StringBuilder str = new StringBuilder();
+    	str.append("delta = \n");
+        str.append("\t\t");
 
+        // Write Alphabet across the top of the table
         for(Character c: sigma) {
-            transTable += c + "\t";
+            str.append(c); 
+            str.append("\t");
         }
         
-        transTable += "\n";
+        str.append("\n");
 
         for(DFAState s: Q) {
-            transTable += "\t" + s.toString();
+        	// Write States down the side of the table
+            str.append("\t");
+            str.append(s.toString());
+            
+            // Fill table with transitions
             for(Character c: sigma) {
-                transTable += "\t" + delta.get(s.toString() + c).toString();
+            	str.append("\t");
+            	str.append(delta.get(s.toString() + c).toString());
             }
 
-            transTable += "\n";
-
+            str.append("\n");
         }
 
-        return transTable;
-
+        return str.toString();
     }
 
     /*  
