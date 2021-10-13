@@ -5,6 +5,7 @@ import fa.State;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.Iterator;
 
 /**
  * Deterministic Finite Automaton. Conveniently store a machine's 5-tuple
@@ -77,24 +78,51 @@ public class DFA implements DFAInterface, FAInterface {
 
     @Override
     public String toString() {
-    	// TODO: Need to Build a String for this DFA
-        return "";
+    	StringBuilder str = new StringBuilder();
+    	str.append(getQ());
+    	str.append("\n");
+    	str.append(getSigma());
+    	str.append("\n");
+    	str.append(getDelta());
+    	str.append("\n");
+    	str.append(getQ0());
+    	str.append("\n");
+    	str.append(getF());
+        return str.toString();
     }
 
     /*  
      * Get States (as a String).
      */
     private String getQ() {
-    	// TODO: Return States
-        return "";
+    	StringBuilder str = new StringBuilder();
+    	Iterator<DFAState> iter = Q.iterator();
+    	
+    	str.append("Q = { ");
+    	while (iter.hasNext()) {
+    		str.append(iter.next());
+    		str.append(" ");
+    	}
+    	str.append("}");
+    	
+        return str.toString();
     }
 
     /*  
      * Get Alphabet (as a String).
      */
     private String getSigma() {
-    	// TODO: Return Alphabet
-        return "";
+    	StringBuilder str = new StringBuilder();
+    	Iterator<Character> iter = Sigma.iterator();
+    	
+    	str.append("Sigma = { ");
+    	while (iter.hasNext()) {
+    		str.append(iter.next());
+    		str.append(" ");
+    	}
+    	str.append("}");
+    	
+        return str.toString();
     }
 
     /*  
@@ -109,15 +137,27 @@ public class DFA implements DFAInterface, FAInterface {
      * Get Initial State (as a String).
      */
     private String getQ0() {
-        return q0.toString();
+    	StringBuilder str = new StringBuilder();
+    	str.append("q0 = ");
+    	str.append(q0.toString());
+        return str.toString();
     }
 
     /*  
      * Get Final States (as a String).
      */
     private String getF() {
-    	// TODO: Return Final States
-        return "";
+    	StringBuilder str = new StringBuilder();
+    	Iterator<DFAState> iter = F.iterator();
+    	
+    	str.append("F = { ");
+    	while (iter.hasNext()) {
+    		str.append(iter.next());
+    		str.append(" ");
+    	}
+    	str.append("}");
+    	
+        return str.toString();
     }
 
 }
