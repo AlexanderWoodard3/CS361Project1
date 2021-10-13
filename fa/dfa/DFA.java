@@ -16,11 +16,19 @@ import java.util.Iterator;
 public class DFA implements DFAInterface, FAInterface {
 
 	// Instance variables populated with real values after Object construction
-    private LinkedHashSet<DFAState> Q = new LinkedHashSet<DFAState>();				// States
-	private LinkedHashSet<Character> sigma = new LinkedHashSet<Character>();		// Alphabet
-	private HashMap<String, DFAState> delta = new HashMap<String, DFAState>();		// Transitions
-	private DFAState q0 = null;														// Initial State
-	private LinkedHashSet<DFAState> F = new LinkedHashSet<DFAState>();				// Final States
+    private LinkedHashSet<DFAState> Q;				// States
+	private LinkedHashSet<Character> sigma;		    // Alphabet
+	private HashMap<String, DFAState> delta;		// Transitions
+	private DFAState q0;							// Initial State
+	private LinkedHashSet<DFAState> F;				// Final States
+
+    public DFA() {
+        Q = new LinkedHashSet<DFAState>();
+        sigma = new LinkedHashSet<Character>();
+        delta = new HashMap<String, DFAState>();
+        q0 = null;
+        F = new LinkedHashSet<DFAState>();
+    }
 
     @Override
     public void addStartState(String name) {
@@ -41,7 +49,20 @@ public class DFA implements DFAInterface, FAInterface {
 
     @Override
     public void addTransition(String fromState, char symbol, String toState) {
-    	// TODO: Need to store transitions
+    	String keyString = fromState + symbol;
+		DFAState transState = null;
+
+		for(DFAState state: Q) {
+			if(state.toString().equals(toState)) {
+				transState = state;
+			}
+		}
+
+		delta.put(keyString, transState);
+
+		if(!sigma.contains(symbol)) {
+			sigma.add(symbol);
+		}
     }
 
     @Override
@@ -66,14 +87,43 @@ public class DFA implements DFAInterface, FAInterface {
 
     @Override
     public boolean accepts(String s) {
-    	// TODO: Need to check if a string is accepted.
-        return false;
+    	boolean accepts = true;
+		DFAState currState = q0;
+
+		// run through the string to see if it is valid
+		for(int i = 0; i < s.length(); i++) {
+			// if the character is in the alphabet
+			if(sigma.contains(s.charAt(i))){
+				// get the state it takes us to from current state
+				currState = getToState(currState, s.charAt(i));
+			} else if(s.charAt(i) == 'e') {
+				accepts = true;
+				break;
+			} else {
+				// otherwise, we don't accept the string & break the loop
+				accepts = false;
+				break;
+			}
+        
+        }
+
+		// if we made it through the loop, and the current state is a final state
+		if(accepts && F.contains(currState)) {
+			// we accept the string
+			accepts = true;
+		} else {
+			// we reject the string
+			accepts = false;
+		}
+
+		return accepts;
+
     }
 
     @Override
     public DFAState getToState(DFAState from, char onSymb) {
-    	// TODO: Need to return transitions
-        return q0;
+    	DFAState nextState = delta.get(from.toString() + onSymb);
+        return nextState;
     }
 
     @Override
@@ -129,8 +179,27 @@ public class DFA implements DFAInterface, FAInterface {
      * Get Transitions (as a String).
      */
     private String getDelta() {
-    	// TODO: Return Transitions
-        return "";
+    	String transTable = "delta = \n";
+        transTable += "\t\t";
+
+        for(Character c: sigma) {
+            transTable += c + "\t";
+        }
+        
+        transTable += "\n";
+
+        for(DFAState s: Q) {
+            transTable += "\t" + s.toString();
+            for(Character c: sigma) {
+                transTable += "\t" + delta.get(s.toString() + c).toString();
+            }
+
+            transTable += "\n";
+
+        }
+
+        return transTable;
+
     }
 
     /*  
