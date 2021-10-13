@@ -7,46 +7,40 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * 
- * Description needs to be written
- * 
+ * Deterministic Finite Automaton. Conveniently store a machine's 5-tuple
+ * and determine if a language is recognized.
+ *
  * @author Alexander Woodard and Quinn Shultz
  */
 public class DFA implements DFAInterface, FAInterface {
 
-    private LinkedHashSet<DFAState> Q;
-	private LinkedHashSet<Character> sigma;
-	private HashMap<String, DFAState> delta;
-	private DFAState q0;
-	private LinkedHashSet<DFAState> F;
-
-    /* Description needs to be written */
-    public DFA() {
-		Q = new LinkedHashSet<DFAState>();
-		sigma = new LinkedHashSet<Character>();
-		delta = new HashMap<String, DFAState>();
-		q0 = null;
-		F = new LinkedHashSet<DFAState>();
-	}
+	// Instance variables populated with real values after Object construction
+    private LinkedHashSet<DFAState> Q = new LinkedHashSet<DFAState>();				// States
+	private LinkedHashSet<Character> sigma = new LinkedHashSet<Character>();		// Alphabet
+	private HashMap<String, DFAState> delta = new HashMap<String, DFAState>();		// Transitions
+	private DFAState q0 = null;														// Initial State
+	private LinkedHashSet<DFAState> F = new LinkedHashSet<DFAState>();				// Final States
 
     @Override
     public void addStartState(String name) {
-
+    	q0 = new DFAState(name);
     }
 
     @Override
     public void addState(String name) {
-
+    	DFAState newState = new DFAState(name);
+    	Q.add(newState);
     }
 
     @Override
     public void addFinalState(String name) {
-
+    	DFAState newState = new DFAState(name);
+    	F.add(newState);
     }
 
     @Override
     public void addTransition(String fromState, char symbol, String toState) {
-
+    	// TODO: Need to store transitions
     }
 
     @Override
@@ -71,42 +65,59 @@ public class DFA implements DFAInterface, FAInterface {
 
     @Override
     public boolean accepts(String s) {
-        return;
+    	// TODO: Need to check if a string is accepted.
+        return false;
     }
 
     @Override
     public DFAState getToState(DFAState from, char onSymb) {
-        return;
+    	// TODO: Need to return transitions
+        return q0;
     }
 
     @Override
     public String toString() {
-        return;
+    	// TODO: Need to Build a String for this DFA
+        return "";
     }
 
-    /* Description needs to be written */
+    /*  
+     * Get States (as a String).
+     */
     private String getQ() {
+    	// TODO: Return States
         return;
     }
 
-    /* Description needs to be written */
+    /*  
+     * Get Alphabet (as a String).
+     */
     private String getSigma() {
-        return;
+    	// TODO: Return Alphabet
+        return "";
     }
 
-    /* Description needs to be written */
+    /*  
+     * Get Transitions (as a String).
+     */
     private String getDelta() {
-        return;
+    	// TODO: Return Transitions
+        return "";
     }
 
-    /* Description needs to be written */
+    /*  
+     * Get Initial State (as a String).
+     */
     private String getQ0() {
-        return;
+        return q0.toString();
     }
 
-    /* Description needs to be written */
+    /*  
+     * Get Final States (as a String).
+     */
     private String getF() {
-        return;
+    	// TODO: Return Final States
+        return "";
     }
 
 }

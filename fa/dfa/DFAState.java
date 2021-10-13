@@ -20,6 +20,10 @@ public class DFAState extends State {
 		this.name = name;
 	}
 
+	/**
+	 * Return the name of this state.
+	 * @return State represented as a String.
+	 */
 	public String toString() {
 		return name;
 	}	
